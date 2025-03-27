@@ -263,3 +263,5 @@ $RECYCLE.BIN/
 
 # End of https://www.toptal.com/developers/gitignore/api/maven,macos,emacs,windows,eclipse,visualstudiocode,vim,java
 
+# Visual Studio Code
+.vscode/
