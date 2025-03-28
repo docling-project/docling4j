@@ -43,9 +43,17 @@ jobs:
       pull-requests: write # to be able to comment on released pull requests
       id-token: write # to enable use of OIDC for npm provenance
     steps:
+      - name: Create GitHub token
+        uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ vars.CI_APP_ID }}
+          private-key: ${{ secrets.CI_PRIVATE_KEY }}
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          token: ${{ steps.app-token.outputs.token }}
+          fetch-depth: 0  # for fetching tags, required for semantic-release
           persist-credentials: false
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -63,5 +71,5 @@ jobs:
         run: npm audit signatures
       - name: Run semantic-release
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: npm run semantic-release
