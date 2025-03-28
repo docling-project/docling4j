@@ -1,0 +1,61 @@
+# This workflow will build and unit test the project.
+# If the workflow is running on the "main" branch, then
+# semantic-release is also run to create a new release (if
+# warranted by the new commits being built).
+
+name: Build/Release
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read # for checkout
+
+jobs:
+  build:
+    name: Build/Test (Java ${{matrix.java-version}})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java-version: ['11', '17', '21', '24']
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup Java ${{matrix.java-version}}
+        uses: actions/setup-java@v4 
+        with:
+          java-version: ${{matrix.java-version}}
+          distribution: 'adopt'
+          cache: 'maven'
+      - name: Build & Test
+        run: mvn -B clean package
+
+  create-release:
+    needs: build
+    name: Semantic-Release
+    if: "github.ref_name == 'main' && github.event_name != 'pull_request'"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # to be able to publish a GitHub release
+      issues: write # to be able to comment on released issues
+      pull-requests: write # to be able to comment on released pull requests
+      id-token: write # to enable use of OIDC for npm provenance
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+      - name: Install dependencies
+        run: npm clean-install
+      - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
+        run: npm audit signatures
+      - name: Release
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: npm run semantic-release

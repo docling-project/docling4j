@@ -1,0 +1,327 @@
+<project xmlns="https://maven.apache.org/POM/4.0.0" xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.ibm.docling</groupId>
+  <artifactId>docling4j</artifactId>
+  <packaging>jar</packaging>
+  <name>docling4j</name>
+  <version>99-SNAPSHOT</version>
+  <description>Run Docling's functionality with Java</description>
+  <url>https://github.com/docling-project/docling4j</url>
+
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <surefire-version>3.1.2</surefire-version>
+    <checkstyle-plugin-version>3.3.0</checkstyle-plugin-version>
+    <checkstyle-version>10.21.4</checkstyle-version>
+    <jacoco-plugin-version>0.8.10</jacoco-plugin-version>
+    <compiler-plugin-version>3.11.0</compiler-plugin-version>
+    <java-source-version>21</java-source-version>
+    <java-target-version>21</java-target-version>
+    <maven-enforcer-version>3.4.1</maven-enforcer-version>
+    <maven-deploy-plugin-version>3.1.1</maven-deploy-plugin-version>
+    <min-maven-version>3.5.0</min-maven-version>
+    <min-jdk-version>11</min-jdk-version>
+    <surefireJvmArgs></surefireJvmArgs>
+  </properties>
+
+  <licenses>
+    <license>
+      <name>MIT</name>
+      <url>https://spdx.org/licenses/MIT.html</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <organization>
+      <name>IBM Research</name>
+  </organization>
+
+  <scm>
+    <connection>scm:git:https://github.com/docling-project/docling4j</connection>
+    <developerConnection>scm:git:https://github.com/docling-project/docling4j</developerConnection>
+    <url>https://github.com/docling-project/docling4j/tree/main</url>
+  </scm>
+
+  <issueManagement>
+    <system>GitHub</system>
+    <url>https://github.com/docling-project/docling4j/issues</url>
+  </issueManagement>
+
+  <ciManagement></ciManagement>
+
+  <distributionManagement></distributionManagement>
+
+  <repositories>
+    <repository>
+      <id>central</id>
+      <name>Central Repository</name>
+      <url>https://repo.maven.apache.org/maven2</url>
+      <layout>default</layout>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+  
+  <pluginRepositories>
+    <pluginRepository>
+      <id>central</id>
+      <name>Central Repository</name>
+      <url>https://repo.maven.apache.org/maven2</url>
+      <layout>default</layout>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </pluginRepository>
+  </pluginRepositories>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.graalvm.polyglot</groupId>
+      <artifactId>python</artifactId>
+      <version>24.2.0</version>
+      <type>pom</type>
+    </dependency>
+    <dependency>
+      <groupId>org.graalvm.polyglot</groupId>
+      <artifactId>polyglot</artifactId>
+      <version>24.2.0</version>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.13.2</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  
+  <build>
+    <directory>${project.basedir}/target</directory>
+    <outputDirectory>${project.build.directory}/classes</outputDirectory>
+    <finalName>${project.artifactId}-${project.version}</finalName>
+    <testOutputDirectory>${project.build.directory}/test-classes</testOutputDirectory>
+    <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
+    <scriptSourceDirectory>${project.basedir}/src/main/scripts</scriptSourceDirectory>
+    <testSourceDirectory>${project.basedir}/src/test/java</testSourceDirectory>
+    <resources>
+      <resource>
+        <directory>${project.basedir}/src/main/resources</directory>
+      </resource>
+    </resources>
+    <testResources>
+      <testResource>
+        <directory>${project.basedir}/src/test/resources</directory>
+      </testResource>
+    </testResources>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>${maven-enforcer-version}</version>
+        <executions>
+          <execution>
+            <id>enforce-versions</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <requireMavenVersion>
+                  <version>${min-maven-version}</version>
+                  <message>Apache Maven ${min-maven-version}+
+                      is required to build this project.
+                  </message>
+                </requireMavenVersion>
+                <requireJavaVersion>
+                  <version>${min-jdk-version}</version>
+                  <message>Java ${min-jdk-version}+ is
+                      required to build this project.
+                  </message>
+                </requireJavaVersion>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+    </plugin>
+    <plugin>
+      <!-- Disable default maven-deploy-plugin -->
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-deploy-plugin</artifactId>
+      <version>${maven-deploy-plugin-version}</version>
+      <configuration>
+        <skip>true</skip>
+      </configuration>
+    </plugin>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-source-plugin</artifactId>
+      <version>3.0.1</version>
+      <executions>
+        <execution>
+          <id>attach-sources</id>
+          <goals>
+            <goal>jar</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-javadoc-plugin</artifactId>
+      <version>3.0.1</version>
+      <configuration>
+        <show>public</show>
+        <doctitle>${project.name}, version ${project.version}</doctitle>
+        <footer>IBM Corporation</footer>
+        <source>8</source>
+        <detectJavaApiLink>false</detectJavaApiLink>
+      </configuration>
+      <executions>
+        <execution>
+          <id>attach-javadocs</id>
+          <goals>
+            <goal>jar</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-checkstyle-plugin</artifactId>
+      <version>${checkstyle-plugin-version}</version>
+      <executions>
+        <execution>
+          <id>verify-style</id>
+          <phase>test</phase>
+          <goals>
+            <goal>check</goal>
+          </goals>
+        </execution>
+      </executions>
+      <configuration>
+        <failsOnError>true</failsOnError>
+        <configLocation>checkstyle.xml</configLocation>
+        <consoleOutput>true</consoleOutput>
+      </configuration>
+      <dependencies>
+        <dependency>
+          <groupId>com.puppycrawl.tools</groupId>
+          <artifactId>checkstyle</artifactId>
+          <version>${checkstyle-version}</version>
+        </dependency>
+      </dependencies>
+    </plugin>
+    <plugin>
+      <groupId>org.jacoco</groupId>
+      <artifactId>jacoco-maven-plugin</artifactId>
+      <version>${jacoco-plugin-version}</version>
+      <executions>
+        <execution>
+          <id>prepare-agent</id>
+          <goals>
+            <goal>prepare-agent</goal>
+          </goals>
+        </execution>
+        <execution>
+          <id>report</id>
+          <phase>prepare-package</phase>
+          <goals>
+            <goal>report</goal>
+          </goals>
+        </execution>
+        <execution>
+          <id>post-unit-test</id>
+          <phase>test</phase>
+          <goals>
+            <goal>report</goal>
+          </goals>
+          <configuration>
+            <append>true</append>
+            <destFile>${sonar.jacoco.reportPath}</destFile>
+          </configuration>
+        </execution>
+      </executions>
+    </plugin>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-compiler-plugin</artifactId>
+      <version>${compiler-plugin-version}</version>
+      <configuration>
+        <source>${java-source-version}</source>
+        <target>${java-target-version}</target>
+      </configuration>
+    </plugin>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-surefire-plugin</artifactId>
+      <version>${surefire-version}</version>
+      <configuration>
+        <reuseForks>false</reuseForks>
+        <forkCount>1</forkCount>
+        <argLine>@{argLine} ${surefireJvmArgs}</argLine>
+      </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  
+  <reporting>
+    <outputDirectory>${project.build.directory}/site</outputDirectory>
+  </reporting>
+
+  <developers>
+    <developer>
+      <name>Cesar Berrospi Ramis</name>
+      <email>ceb@zurich.ibm.com</email>
+      <url>https://research.ibm.com/people/cesar-berrospi-ramis</url>
+      <organization>IBM Research</organization>
+      <organizationUrl>https://research.ibm.com/</organizationUrl>
+    </developer>
+  </developers>
+  
+  <profiles>
+    <!-- NOTE: The release profile will be removed from future versions of the super POM -->
+    <profile>
+      <id>release-profile</id>
+      <activation>
+        <property>
+          <name>performRelease</name>
+          <value>true</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <inherited>true</inherited>
+            <artifactId>maven-source-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+                <goals>
+                  <goal>jar-no-fork</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <inherited>true</inherited>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>attach-javadocs</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <inherited>true</inherited>
+            <artifactId>maven-deploy-plugin</artifactId>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
+</project>

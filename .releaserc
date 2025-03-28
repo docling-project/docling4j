@@ -1,0 +1,24 @@
+{
+  "debug": true,
+  "tagFormat": "${version}",
+  "branches": [ "main" ],
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    "@semantic-release/changelog",
+    [
+      "@semantic-release/exec", 
+      {
+        "prepareCmd": "bump-my-version bump --allow-dirty --current-version ${lastRelease.version} --new-version ${nextRelease.version}"
+      }
+    ],
+    [
+      "@semantic-release/git", 
+      {
+        "assets" : [ "pom.xml", "CHANGELOG.md" ],
+        "message": "chore(release): bump ${nextRelease.version}\n\n${nextRelease.notes}"
+      }
+    ],
+    "@semantic-release/github"
+  ]
+}
