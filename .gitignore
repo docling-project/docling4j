@@ -265,3 +265,7 @@ $RECYCLE.BIN/
 
 # Visual Studio Code
 .vscode/
+
+# Files produced by "npm install" commands during build
+package-lock.json
+node_modules/
