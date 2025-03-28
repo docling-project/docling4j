@@ -51,11 +51,17 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "lts/*"
-      - name: Install dependencies
-        run: npm clean-install
-      - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+      - name: Install Publishing Tools
+        run: |
+          pip install bump-my-version
+          npm install
+      - name: Verify the integrity of provenance attestations and registry signatures
         run: npm audit signatures
-      - name: Release
+      - name: Run semantic-release
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: npm run semantic-release
