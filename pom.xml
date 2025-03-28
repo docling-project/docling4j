@@ -15,7 +15,7 @@
     <checkstyle-plugin-version>3.3.0</checkstyle-plugin-version>
     <checkstyle-version>10.21.4</checkstyle-version>
     <jacoco-plugin-version>0.8.10</jacoco-plugin-version>
-    <compiler-plugin-version>3.11.0</compiler-plugin-version>
+    <compiler-plugin-version>3.14.0</compiler-plugin-version>
     <java-source-version>21</java-source-version>
     <java-target-version>21</java-target-version>
     <maven-enforcer-version>3.4.1</maven-enforcer-version>
@@ -168,26 +168,6 @@
     </plugin>
     <plugin>
       <groupId>org.apache.maven.plugins</groupId>
-      <artifactId>maven-javadoc-plugin</artifactId>
-      <version>3.0.1</version>
-      <configuration>
-        <show>public</show>
-        <doctitle>${project.name}, version ${project.version}</doctitle>
-        <footer>IBM Corporation</footer>
-        <source>8</source>
-        <detectJavaApiLink>false</detectJavaApiLink>
-      </configuration>
-      <executions>
-        <execution>
-          <id>attach-javadocs</id>
-          <goals>
-            <goal>jar</goal>
-          </goals>
-        </execution>
-      </executions>
-    </plugin>
-    <plugin>
-      <groupId>org.apache.maven.plugins</groupId>
       <artifactId>maven-checkstyle-plugin</artifactId>
       <version>${checkstyle-plugin-version}</version>
       <executions>
@@ -299,18 +279,6 @@
                 <id>attach-sources</id>
                 <goals>
                   <goal>jar-no-fork</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <inherited>true</inherited>
-            <artifactId>maven-javadoc-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>attach-javadocs</id>
-                <goals>
-                  <goal>jar</goal>
                 </goals>
               </execution>
             </executions>
