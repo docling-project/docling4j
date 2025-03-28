@@ -15,8 +15,8 @@
     [
       "@semantic-release/git", 
       {
-        "assets" : [ "pom.xml", "CHANGELOG.md" ],
-        "message": "chore(release): bump ${nextRelease.version}\n\n${nextRelease.notes}"
+        "assets" : [ "CHANGELOG.md" ],
+        "message": "chore(release): ${nextRelease.version} release notes\n\n${nextRelease.notes}"
       }
     ],
     "@semantic-release/github"
