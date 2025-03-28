@@ -2,12 +2,12 @@
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
 
-# Docling4j version 0.1.0
+# Docling4j version 0.1.1
 
 **Docling4j** brings the functionalities of [Docling](https://github.com/docling-project/docling) in document understanding to Java® projects.
 
 ## Installation (WIP)
-The current version of this library is: 0.1.0
+The current version of this library is: 0.1.1
 
 To use it in your project, define a dependency that contains the artifact coordinates (group id, artifact id and version)
 for the service, like this:
@@ -18,7 +18,7 @@ for the service, like this:
 <dependency>
     <groupId>com.ibm.docling</groupId>
     <artifactId>docling4j</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
 </dependency>
 ```
 
