@@ -11,13 +11,13 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>21</maven.compiler.source>
+    <maven.compiler.target>21</maven.compiler.target>
     <surefire-version>3.1.2</surefire-version>
-    <checkstyle-plugin-version>3.3.0</checkstyle-plugin-version>
+    <checkstyle-plugin-version>3.6.0</checkstyle-plugin-version>
     <checkstyle-version>10.21.4</checkstyle-version>
-    <jacoco-plugin-version>0.8.10</jacoco-plugin-version>
+    <jacoco-plugin-version>0.8.12</jacoco-plugin-version>
     <compiler-plugin-version>3.14.0</compiler-plugin-version>
-    <java-source-version>21</java-source-version>
-    <java-target-version>21</java-target-version>
     <maven-enforcer-version>3.4.1</maven-enforcer-version>
     <maven-deploy-plugin-version>3.1.1</maven-deploy-plugin-version>
     <min-maven-version>3.5.0</min-maven-version>
@@ -89,9 +89,9 @@
       <version>24.2.0</version>
     </dependency>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.13.2</version>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>5.13.0-M2</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -227,10 +227,6 @@
       <groupId>org.apache.maven.plugins</groupId>
       <artifactId>maven-compiler-plugin</artifactId>
       <version>${compiler-plugin-version}</version>
-      <configuration>
-        <source>${java-source-version}</source>
-        <target>${java-target-version}</target>
-      </configuration>
     </plugin>
     <plugin>
       <groupId>org.apache.maven.plugins</groupId>

@@ -1,7 +1,11 @@
 package com.ibm.docling;
 
+import org.graalvm.polyglot.Context;
+
 public class HelloWorld {
 	public static void main(String[] args) {
-		System.out.println("Hello, World!");
+		try (Context context = Context.create()) {
+			context.eval("python", "print('Hello from GraalPy!')");
+		}
 	}
 }

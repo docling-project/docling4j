@@ -1,5 +1,6 @@
 [![License MIT](https://img.shields.io/github/license/docling-project/docling-parse)](https://opensource.org/licenses/MIT)
-[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
+[![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
+[![graalpy](https://img.shields.io/badge/pyenv-graalpy-blue)](#start-replacing-cpython-with-graalpy) 
 
 
 # Docling4j version 0.1.1
@@ -21,6 +22,8 @@ for the service, like this:
     <version>0.1.1</version>
 </dependency>
 ```
+
+**docling4j** uses [GraalPy](https://www.graalvm.org/python), a high-performance embeddable Python 3 runtime for Java. Although not required, [Oracle GraalVM JDK](https://www.oracle.com/java/graalvm/) is recommended for running **docling4j**, since it supports runtime compilation to native code and efficient execution of embedded applications. Find more details on the level of optimizations of different Java runtimes [here](https://www.graalvm.org/latest/reference-manual/embed-languages/#runtime-optimization-support).
 
 ## Get help and support
 
